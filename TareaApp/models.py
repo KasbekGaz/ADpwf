@@ -20,4 +20,3 @@ class Tarea(models.Model):
         return self.titulo + ' - Esta tarea es de: -' + self.user.username
     
 
-

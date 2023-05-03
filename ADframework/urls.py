@@ -20,5 +20,7 @@ from TareaApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    path('', views.casa, name='casa'),
+    path('registrar/', views.registro, name='registro'),
+    path('inicio/', views.autenticar, name='inicio'),
 ]
