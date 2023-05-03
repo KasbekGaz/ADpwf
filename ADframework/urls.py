@@ -23,4 +23,6 @@ urlpatterns = [
     path('', views.casa, name='casa'),
     path('registrar/', views.registro, name='registro'),
     path('inicio/', views.autenticar, name='inicio'),
+    path('logout/', views.closesesion, name="CerrarSesion")
+
 ]
