@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Vista de tareas</h1>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <h1>{{task.titulo}}</h1>
+        <p>{{task.descripcio}}</p>
+        <p>{{task.asignado_a}}</p>
+        <p>{{task.fecha_limite}}</p>
+    </li>
+</ul>
+
+{% endfor %}
+{% endblock  %}
