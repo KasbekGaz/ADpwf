@@ -25,6 +25,7 @@ urlpatterns = [
     path('inicio/', views.autenticar, name='inicio'),
     path('logout/', views.closesesion, name="CerrarSesion"),
     path('tareas/', views.tarea, name='vistatarea' ),
-    path('tareas/crear/', views.nuevatarea, name="crearT")
+    path('tareas/crear/', views.nuevatarea, name="crearT"),
+    path('tareas/<int:tarea_id>/', views.detalles_tarea, name='detalle_tarea')
     
 ]

@@ -1,5 +1,5 @@
 # view.py en la carpeta de Tasks
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
@@ -90,4 +90,26 @@ def nuevatarea(request):
             })
 
 
-#aqui va actualizar tarea
+#Detalles de la tarea:
+
+def detalles_tarea(request, tarea_id):
+    if request.method == 'GET':
+        tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
+        form = TareaForm(instance=tarea)
+        return render (request, 'detalles_T.html',{
+            'tasks': tarea,
+            'form': form
+        })
+    else:
+        try:
+            tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
+            form = TareaForm(request.POST, instance=tarea)
+            form.save()
+            return redirect('vistatarea')
+
+        except ValueError:
+            return render(request, 'tasks_detalles.html', {
+            'task': tarea,
+            'form': form,
+            'error': 'Error al actuzalizar los datos. Intente de nuevo.'
+            })

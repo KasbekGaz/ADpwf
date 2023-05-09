@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="container">
+    <div class="col row">
+        <div class="col-md-4 offset-md-4">
+            <h1 class="text-secondary">{{task.titulo}}</h1>
+    
+            {{error}}
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn btn-dark">
+                    Actualizar
+                </button>
+            </form>
+        
+            
+        
+        </div>
+    </div>
+</main>
+
+{% endblock  %}

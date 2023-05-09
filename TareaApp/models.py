@@ -16,6 +16,7 @@ class Tarea(models.Model):
     creado_en = models.DateTimeField(auto_now_add=True) #fecha y hora en que se creo al tarea puede ser vista por admin unicamente.
     actualizado_en = models.DateTimeField(auto_now=True) #fecha y hora en que se actualizo la tarea.
     archivo_adjunto = models.FileField(upload_to='archivos/', null=True, blank=True)
+    importante = models.BooleanField(default=False) #campo de importante
 
     def __str__(self) -> str:
         return self.titulo + ' - Esta tarea es de: -' + self.creado_por.username

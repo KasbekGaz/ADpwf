@@ -1,17 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md3">
+            <h1 class="text-center display-3 py-5"> Vista de tareas Pendientes</h1>
 
-<h1> Vista de tareas</h1>
-<ul>
-    {% for task in tasks %}
-    <li>
-        <h1>{{task.titulo}}</h1>
-        <p>{{task.descripcio}}</p>
-        <p>{{task.asignado_a}}</p>
-        <p>{{task.fecha_limite}}</p>
-    </li>
-</ul>
+            <ul>
+                {% for task in tasks %}
+                <a class="list-group-item" href="{% url 'detalle_tarea' task.id %}">
+                    <header class="d-flex justify-content-between">
+                        {% if  task.importante%}
+                        <h1 class="fw-bold text-succes">{{task.titulo}}</h1>
+                        {% else %}
+                        <h1 class="fw-bold">{{task.titulo}}</h1>
+                        {% endif %}
+                    <p>{{task.descripcio}}</p>
+                    <p>{{task.asignado_a}}</p>
+                    <p>{{task.fecha_limite}}</p>
 
-{% endfor %}
+                    </header>
+                    
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
 {% endblock  %}
