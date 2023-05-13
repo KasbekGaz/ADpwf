@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from TareaApp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +33,4 @@ urlpatterns = [
     path('tareas/<int:tarea_id>/completadas', views.completar_tarea, name='complete_tarea'),
     path('tareas/<int:tarea_id>/delete', views.delete_tarea, name='delete_tarea'),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

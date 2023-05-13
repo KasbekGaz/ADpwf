@@ -4,7 +4,7 @@
 
 <h1>Nueva tarea:</h1>
 
-<form method="post" action="/tareas/crear/">
+<form method="post" action="/tareas/crear/" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.as_p}}
     <button>Guardar tarea</button>

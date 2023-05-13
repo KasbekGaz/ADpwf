@@ -84,7 +84,7 @@ def nuevatarea(request):
         })
     else:
         try:
-            form = TareaForm(request.POST)
+            form = TareaForm(request.POST, request.FILES)
             nueva_tarea = form.save(commit=False)
             nueva_tarea.creado_por = request.user
             nueva_tarea.save()

@@ -12,7 +12,7 @@
                     <a href="{% url 'detalle_tarea' task.id %}" class="task-link">
                         <div class="task-header d-flex justify-content-between align-items-center">
                             <h1 class="fw-bold {% if task.importante %}text-success{% endif %}">{{task.titulo}}</h1>
-                            <p class="mb-0">{{task.asignado_a}}</p>
+                            <p class="mb-0"><strong>Asignado a: </strong> {{task.asignado_a}}</p>
                         </div>
                         <div class="task-details">
                             <p><strong>Descripción:</strong> {{task.descripcion}}</p>
