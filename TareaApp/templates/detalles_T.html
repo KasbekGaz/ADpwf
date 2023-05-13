@@ -15,7 +15,18 @@
                     Actualizar
                 </button>
             </form>
-        
+
+        <div>
+            <form action="{% url 'complete_tarea' task.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-secondary">Completado</button>
+            </form>
+            <form action="{% url 'delete_tarea' task.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">Eliminar</button>
+            </form>
+              
+        </div>
             
         
         </div>

@@ -25,7 +25,10 @@ urlpatterns = [
     path('inicio/', views.autenticar, name='inicio'),
     path('logout/', views.closesesion, name="CerrarSesion"),
     path('tareas/', views.tarea, name='vistatarea' ),
-    path('tareas/crear/', views.nuevatarea, name="crearT"),
-    path('tareas/<int:tarea_id>/', views.detalles_tarea, name='detalle_tarea')
-    
+    path('tareas_completadas/', views.tareas_c, name='tareas_c'),
+    path('tareas/crear/', views.nuevatarea, name='crearT'),
+    path('tareas/<int:tarea_id>/', views.detalles_tarea, name='detalle_tarea'),
+    path('tareas/<int:tarea_id>/completadas', views.completar_tarea, name='complete_tarea'),
+    path('tareas/<int:tarea_id>/delete', views.delete_tarea, name='delete_tarea'),
+
 ]

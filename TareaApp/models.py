@@ -17,7 +17,8 @@ class Tarea(models.Model):
     actualizado_en = models.DateTimeField(auto_now=True) #fecha y hora en que se actualizo la tarea.
     archivo_adjunto = models.FileField(upload_to='archivos/', null=True, blank=True)
     importante = models.BooleanField(default=False) #campo de importante
-
+    Fcompletado = models.DateTimeField(null=True, blank=True)
+    
     def __str__(self) -> str:
         return self.titulo + ' - Esta tarea es de: -' + self.creado_por.username
     

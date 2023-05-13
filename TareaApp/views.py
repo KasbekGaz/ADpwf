@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 from .forms import TareaForm
 #importamos el modelo 
 from .models import Tarea
-
+# para la hora y fecha de ahora
+from django.utils import timezone
 
 
 def casa(request):
@@ -66,10 +67,15 @@ def closesesion(request):
 ##La parte de las tareas vista nicamente
 
 def tarea(request):
-    tasks = Tarea.objects.filter(asignado_a = request.user)
+    tasks = Tarea.objects.filter(asignado_a = request.user, Fcompletado__isnull=True)
+    return render(request, 'Vtareas.html', {'tasks':tasks})
+## Parte de vista en tarea de completado
+def tareas_c(request):
+    tasks = Tarea.objects.filter(asignado_a=request.user, Fcompletado__isnull = False).order_by('-Fcompletado')
     return render(request, 'Vtareas.html', {'tasks':tasks})
 
 
+#### AQUI EMPIEZA EL CRUD  ####
 #para crear tareas con el formulario
 def nuevatarea(request):
     if request.method == 'GET':
@@ -97,7 +103,7 @@ def detalles_tarea(request, tarea_id):
         tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
         form = TareaForm(instance=tarea)
         return render (request, 'detalles_T.html',{
-            'tasks': tarea,
+            'task': tarea,
             'form': form
         })
     else:
@@ -113,3 +119,18 @@ def detalles_tarea(request, tarea_id):
             'form': form,
             'error': 'Error al actuzalizar los datos. Intente de nuevo.'
             })
+
+    #Completar una tarea con la fecha
+def completar_tarea(request, tarea_id):
+    tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
+    if request.method == 'POST':
+        tarea.Fcompletado = timezone.now()
+        tarea.save()
+        return redirect('vistatarea')
+    
+    # Eliminar la tarea
+def delete_tarea(request, tarea_id):
+    tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
+    if request.method == 'POST':
+        tarea.delete()
+        return redirect('vistatarea')
