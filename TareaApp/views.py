@@ -13,6 +13,7 @@ from .models import Tarea
 from django.utils import timezone
 
 
+
 def casa(request):
     return render(request, 'casa.html')
 
@@ -64,7 +65,7 @@ def closesesion(request):
     logout(request)
     return redirect('casa')
 
-##La parte de las tareas vista nicamente
+##La parte de las tareas vista unicamente
 
 def tarea(request):
     tasks = Tarea.objects.filter(asignado_a = request.user, Fcompletado__isnull=True)
@@ -79,21 +80,42 @@ def tareas_c(request):
 #para crear tareas con el formulario
 def nuevatarea(request):
     if request.method == 'GET':
-        return render(request, 'Ctareas.html',{
-           'form': TareaForm(), 
+        return render(request, 'Ctareas.html', {
+            'form': TareaForm(),
         })
     else:
         try:
             form = TareaForm(request.POST, request.FILES)
-            nueva_tarea = form.save(commit=False)
-            nueva_tarea.creado_por = request.user
-            nueva_tarea.save()
-            return redirect('vistatarea')
+            if form.is_valid():
+                nueva_tarea = form.save(commit=False)
+                nueva_tarea.creado_por = request.user
+                nueva_tarea.save()
+                return redirect('vistatarea')
         except:
-            return render(request,'Ctareas.html', {
+            return render(request, 'Ctareas.html', {
                 'form': TareaForm,
-                'error': 'Algo salio mal verifique los campos. !!'
+                'error': 'Algo salió mal, verifica los campos.'
             })
+
+
+#############3
+# def nuevatarea(request):
+#     if request.method == 'GET':
+#         return render(request, 'Ctareas.html',{
+#            'form': TareaForm(), 
+#         })
+#     else:
+#         try:
+#             form = TareaForm(request.POST, request.FILES)
+#             nueva_tarea = form.save(commit=False)
+#             nueva_tarea.creado_por = request.user
+#             nueva_tarea.save()
+#             return redirect('vistatarea')
+#         except:
+#             return render(request,'Ctareas.html', {
+#                 'form': TareaForm,
+#                 'error': 'Algo salio mal verifique los campos. !!'
+#             })
 
 
 #Detalles de la tarea:
@@ -109,16 +131,21 @@ def detalles_tarea(request, tarea_id):
     else:
         try:
             tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
-            form = TareaForm(request.POST, instance=tarea)
-            form.save()
-            return redirect('vistatarea')
-
+            form = TareaForm(request.POST, request.FILES, instance=tarea)
+            #form.save()
+            #return redirect('vistatarea')
+            if form.is_valid():
+                tarea = form.save(commit=False)
+                tarea.archivo_adjunto = request.FILES.get('archivo_adjunto')  # Manejar el archivo adjunto
+                tarea.save()
+                return redirect('vistatarea')
         except ValueError:
-            return render(request, 'tasks_detalles.html', {
+            return render(request, 'detalles_T.html', {
             'task': tarea,
             'form': form,
             'error': 'Error al actuzalizar los datos. Intente de nuevo.'
             })
+
 
     #Completar una tarea con la fecha
 def completar_tarea(request, tarea_id):

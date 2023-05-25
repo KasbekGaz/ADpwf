@@ -1,7 +1,5 @@
-from django.forms import ModelForm
+#from django.forms import ModelForm
 from .models import Tarea
-
-
 from django import forms
 from .models import Tarea
 

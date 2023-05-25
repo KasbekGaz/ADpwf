@@ -2,13 +2,17 @@
 
 {% block content %}
 
-<h1>Nueva tarea:</h1>
-
-<form method="post" action="/tareas/crear/" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button>Guardar tarea</button>
-
-</form>
+<main class="container">
+    <div class="row">
+        <div class="col-md-4 offset-md-4 mt-5">
+            <h1>Nueva tarea:</h1>
+                <form method="post" action="/tareas/crear/" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button class="btn btn-dark">Guardar tarea</button>
+                </form>
+        </div>
+    </div>
+</main>
 
 {% endblock  %}

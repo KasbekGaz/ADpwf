@@ -33,4 +33,4 @@ urlpatterns = [
     path('tareas/<int:tarea_id>/completadas', views.completar_tarea, name='complete_tarea'),
     path('tareas/<int:tarea_id>/delete', views.delete_tarea, name='delete_tarea'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
