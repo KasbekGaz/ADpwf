@@ -66,11 +66,12 @@ def closesesion(request):
     return redirect('casa')
 
 ##La parte de las tareas vista unicamente
-
+@login_required
 def tarea(request):
     tasks = Tarea.objects.filter(asignado_a = request.user, Fcompletado__isnull=True)
     return render(request, 'Vtareas.html', {'tasks':tasks})
 ## Parte de vista en tarea de completado
+@login_required
 def tareas_c(request):
     tasks = Tarea.objects.filter(asignado_a=request.user, Fcompletado__isnull = False).order_by('-Fcompletado')
     return render(request, 'Vtareas.html', {'tasks':tasks})
@@ -78,6 +79,7 @@ def tareas_c(request):
 
 #### AQUI EMPIEZA EL CRUD  ####
 #para crear tareas con el formulario
+@login_required
 def nuevatarea(request):
     if request.method == 'GET':
         return render(request, 'Ctareas.html', {
@@ -98,7 +100,7 @@ def nuevatarea(request):
             })
 
 
-#############3
+#############
 # def nuevatarea(request):
 #     if request.method == 'GET':
 #         return render(request, 'Ctareas.html',{
@@ -119,7 +121,7 @@ def nuevatarea(request):
 
 
 #Detalles de la tarea:
-
+@login_required
 def detalles_tarea(request, tarea_id):
     if request.method == 'GET':
         tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
@@ -148,6 +150,7 @@ def detalles_tarea(request, tarea_id):
 
 
     #Completar una tarea con la fecha
+@login_required
 def completar_tarea(request, tarea_id):
     tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
     if request.method == 'POST':
@@ -156,6 +159,7 @@ def completar_tarea(request, tarea_id):
         return redirect('vistatarea')
     
     # Eliminar la tarea
+@login_required
 def delete_tarea(request, tarea_id):
     tarea = get_object_or_404(Tarea, pk=tarea_id, asignado_a=request.user)
     if request.method == 'POST':
